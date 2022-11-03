@@ -1,0 +1,11 @@
+{
+  "name": "root",
+  "private": true,
+  "devDependencies": {
+    "lerna": "^6.0.1"
+  },
+  "dependencies": {
+    "db-migrate-pg": "^1.2.2",
+    "loopback4-notifications": "^5.0.1"
+  }
+}
