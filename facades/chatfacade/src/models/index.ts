@@ -2,5 +2,6 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-export * from './ping.controller';
-export * from './pubnub-message.controller';
+export * from './socket-message.model';
+export * from './socketnotification.model';
+export * from './socket-message-recipient.model';

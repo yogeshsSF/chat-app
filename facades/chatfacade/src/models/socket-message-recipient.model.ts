@@ -5,30 +5,13 @@
 import {Entity, model, property} from '@loopback/repository';
 
 @model({settings: {strict: false}})
-export class PubnubMessage extends Entity {
+export class SocketMessageRecipient extends Entity {
   @property({
     type: 'string',
     id: true,
     generated: true,
   })
   id?: string;
-
-  @property({
-    type: 'string',
-  })
-  subject?: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  body: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  toUserId?: string;
 
   @property({
     type: 'string',
@@ -40,14 +23,21 @@ export class PubnubMessage extends Entity {
     type: 'string',
     required: true,
   })
-  channelType: string;
+  recipientId: string;
 
   @property({
     type: 'string',
+    required: true,
   })
-  createdBy?: string;
+  messageId: string;
 
-  constructor(data?: Partial<PubnubMessage>) {
+  @property({
+    type: 'boolean',
+    default: false,
+  })
+  isRead?: boolean;
+
+  constructor(data?: Partial<SocketMessageRecipient>) {
     super(data);
   }
 }

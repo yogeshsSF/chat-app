@@ -4,7 +4,7 @@
   "baseURL": "",
   "crud": false,
   "options": {
-    "baseUrl": "http://localhost:1523",
+    "baseUrl": "http://localhost:3002",
     "headers": {
       "accept": "application/json",
       "content-type": "application/json"
@@ -20,7 +20,9 @@
         }
       },
       "functions": {
-        "getNotification": ["token"]
+        "getNotification": [
+          "token"
+        ]
       }
     },
     {
@@ -33,7 +35,10 @@
         "body": "{data}"
       },
       "functions": {
-        "createNotification": ["data","token"]
+        "createNotification": [
+          "data",
+          "token"
+        ]
       }
     }
   ]

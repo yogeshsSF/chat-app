@@ -9,11 +9,11 @@ import {AuthCacheSourceName} from '@sourceloop/core';
 const config = {
   name: AuthCacheSourceName,
   connector: 'kv-redis',
-  url: '',
+  url: process.env.REDIS_URL,
   host: process.env.AUTH_DB_HOST,
   port: process.env.AUTH_DB_PORT,
-  password: process.env.AUTH_DB_PASSWORD,
-  db: process.env.AUTH_DB_DATABASE,
+  // password: process.env.AUTH_DB_PASSWORD,
+  // db: process.env.AUTH_DB_DATABASE,
 };
 
 // Observe application's life cycle to disconnect the datasource when

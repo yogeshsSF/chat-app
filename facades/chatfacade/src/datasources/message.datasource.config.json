@@ -4,7 +4,7 @@
   "baseURL": "",
   "crud": false,
   "options": {
-    "baseUrl": "http://localhost:1432",
+    "baseUrl": "http://localhost:3003",
     "headers": {
       "accept": "application/json",
       "content-type": "application/json"
@@ -23,7 +23,10 @@
         }
       },
       "functions": {
-        "getMessage": ["token","filter"]
+        "getMessage": [
+          "token",
+          "filter"
+        ]
       }
     },
     {
@@ -36,7 +39,10 @@
         "body": "{data}"
       },
       "functions": {
-        "createMessage": ["data","token"]
+        "createMessage": [
+          "data",
+          "token"
+        ]
       }
     },
     {
@@ -51,7 +57,10 @@
         }
       },
       "functions": {
-        "getMessageRecipients": ["token","filter"]
+        "getMessageRecipients": [
+          "token",
+          "filter"
+        ]
       }
     },
     {
@@ -64,7 +73,10 @@
         "body": "{data}"
       },
       "functions": {
-        "createMessageRecipients": ["data","token"]
+        "createMessageRecipients": [
+          "data",
+          "token"
+        ]
       }
     },
     {
@@ -80,7 +92,12 @@
         "body": "{data}"
       },
       "functions": {
-        "updateMsgRecipients": ["id", "data", "token", "where"]
+        "updateMsgRecipients": [
+          "id",
+          "data",
+          "token",
+          "where"
+        ]
       }
     }
   ]

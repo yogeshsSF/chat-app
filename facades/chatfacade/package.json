@@ -1,6 +1,6 @@
 {
-  "name": "@sourceloop/chat-notif-example_facade",
-  "version": "0.3.8",
+  "name": "@sourceloop/chat-facade",
+  "version": "0.1.8",
   "description": "facade",
   "keywords": [
     "loopback-application",
@@ -41,7 +41,7 @@
     "type": "git",
     "url": ""
   },
-  "author": "Yogesh <yogesh.saini@sourcefuse.com>",
+  "author": "Yesha <yesha.mavani@sourcefuse.com>",
   "license": "",
   "files": [
     "README.md",

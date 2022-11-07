@@ -5,7 +5,7 @@
 import {Entity, model, property} from '@loopback/repository';
 
 @model({settings: {strict: false}})
-export class PubnubMessageRecipient extends Entity {
+export class SocketNotification extends Entity {
   @property({
     type: 'string',
     id: true,
@@ -17,27 +17,27 @@ export class PubnubMessageRecipient extends Entity {
     type: 'string',
     required: true,
   })
-  channelId: string;
+  subject: string;
 
   @property({
     type: 'string',
     required: true,
   })
-  recipientId: string;
+  body: string;
 
   @property({
-    type: 'string',
+    type: 'object',
     required: true,
   })
-  messageId: string;
+  receiver: object;
 
   @property({
-    type: 'boolean',
-    default: false,
+    type: 'number',
+    required: true,
   })
-  isRead?: boolean;
+  type: number;
 
-  constructor(data?: Partial<PubnubMessageRecipient>) {
+  constructor(data?: Partial<SocketNotification>) {
     super(data);
   }
 }

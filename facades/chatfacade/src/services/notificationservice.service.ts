@@ -5,17 +5,17 @@
 import {inject, Provider} from '@loopback/core';
 import {getService} from '@loopback/service-proxy';
 import {NotificationDataSource} from '../datasources';
-import {Pubnubnotification} from '../models';
+import {SocketNotification} from '../models';
 
 export interface Notificationservice {
   // this is where you define the Node.js methods that will be
   // mapped to REST/SOAP/gRPC operations as stated in the datasource
   // json file.
-  getNotification(token: string): Promise<Pubnubnotification[]>;
+  getNotification(token: string): Promise<SocketNotification[]>;
   createNotification(
-    data: Pubnubnotification,
+    data: SocketNotification,
     token: string,
-  ): Promise<Pubnubnotification>;
+  ): Promise<SocketNotification>;
 }
 
 export class NotificationserviceProvider
@@ -24,7 +24,7 @@ export class NotificationserviceProvider
   constructor(
     // notification must match the name property in the datasource json file
     @inject('datasources.notification')
-    protected dataSource: NotificationDataSource = new NotificationDataSource(),
+    protected dataSource: NotificationDataSource = new NotificationDataSource(), //NOSONAR
   ) {}
 
   value(): Promise<Notificationservice> {

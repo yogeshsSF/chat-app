@@ -21,8 +21,8 @@ import {
   STRATEGY,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {PubnubMessageRecipient, Pubnubnotification} from '../models';
-import {PubnubMessage} from '../models/pubnub-message.model';
+import {SocketMessageRecipient, SocketNotification} from '../models';
+import {SocketMessage} from '../models/socket-message.model';
 import {Messageservice, Notificationservice} from '../services';
 import {
   CONTENT_TYPE,
@@ -51,7 +51,7 @@ export class PubnubMessageController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(PubnubMessage, {includeRelations: true}),
+              items: getModelSchemaRef(SocketMessage, {includeRelations: true}),
             },
           },
         },
@@ -59,12 +59,14 @@ export class PubnubMessageController {
     },
   })
   async find(
-    @inject(AuthenticationBindings.CURRENT_USER) user: IAuthUserWithPermissions,
+    // sonarignore:start
     @param.header.string('Authorization') token: string,
     @param.query.string('ChannelID') channelID?: string,
-    @param.filter(PubnubMessage) filter?: Filter<PubnubMessage>,
-  ): Promise<PubnubMessage[]> {
-    const filter1: Filter<PubnubMessage> = {
+    // @inject(AuthenticationBindings.CURRENT_USER) user: IAuthUserWithPermissions,
+    @param.filter(SocketMessage) filter?: Filter<SocketMessage>,
+    // sonarignore:end
+  ): Promise<SocketMessage[]> {
+    const filter1: Filter<SocketMessage> = {
       where: {
         channelId: channelID,
       },
@@ -81,7 +83,7 @@ export class PubnubMessageController {
       [STATUS_CODE.OK]: {
         description: 'Message model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(PubnubMessage)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(SocketMessage)},
         },
       },
     },
@@ -91,24 +93,24 @@ export class PubnubMessageController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(PubnubMessage, {
+          schema: getModelSchemaRef(SocketMessage, {
             title: 'Message',
             exclude: ['id'],
           }),
         },
       },
     })
-    message: PubnubMessage,
-  ): Promise<PubnubMessage> {
+    message: SocketMessage,
+  ): Promise<SocketMessage> {
     message.channelId = message.channelId ?? message.toUserId;
     const msg = await this.messageService.createMessage(message, token);
-    const msgrecipient = new PubnubMessageRecipient({
+    const msgrecipient = new SocketMessageRecipient({
       channelId: message.channelId,
       recipientId: message.toUserId ?? message.channelId,
       messageId: msg.id,
     });
     await this.messageService.createMessageRecipients(msgrecipient, token);
-    const notif = new Pubnubnotification({
+    const notif = new SocketNotification({
       subject: message.subject,
       body: message.body,
       type: 0,
@@ -143,14 +145,14 @@ export class PubnubMessageController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(PubnubMessageRecipient, {partial: true}),
+          schema: getModelSchemaRef(SocketMessageRecipient, {partial: true}),
         },
       },
     })
-    messageRecipient: Partial<PubnubMessageRecipient>,
-    @param.query.object('where', getWhereSchemaFor(PubnubMessageRecipient))
-    where?: Where<PubnubMessageRecipient>,
-  ): Promise<PubnubMessageRecipient> {
+    // messageRecipient: Partial<SocketMessageRecipient>, //NOSONAR
+    @param.query.object('where', getWhereSchemaFor(SocketMessageRecipient))
+    where?: Where<SocketMessageRecipient>, //NOSONAR
+  ): Promise<SocketMessageRecipient> {
     const patched = {
       isRead: true,
     };
@@ -175,7 +177,7 @@ export class PubnubMessageController {
   })
   async me(
     @inject(AuthenticationBindings.CURRENT_USER) user: IAuthUserWithPermissions,
-    @param.header.string('Authorization') token: string,
+    @param.header.string('Authorization') token: string, //NOSONAR
   ): Promise<string> {
     if (user.userTenantId) {
       return user.userTenantId;
