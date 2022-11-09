@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022 Sourcefuse Technologies
+// Copyright (c) 2022 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
@@ -10,7 +10,9 @@ import {environment} from '../environments/environment';
 const baseUrl = `${environment.BASE_URL}/messages`;
 const tenantIdUrl = `${environment.BASE_URL}/userTenantId`;
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UserService {
   constructor(private readonly http: HttpClient) {}
 
@@ -30,7 +32,7 @@ export class UserService {
 
   post(message: Chat, token: string) {
     const authHeader = new HttpHeaders({Authorization: `Bearer ${token}`});
-    return this.http.post(baseUrl, message, {headers: authHeader});
+    return this.http.post<Chat>(baseUrl, message, {headers: authHeader});
   }
 
   getUserTenantId(token: string) {

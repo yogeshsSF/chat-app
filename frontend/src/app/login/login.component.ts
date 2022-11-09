@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../auth.service';
@@ -9,7 +9,7 @@ import {first} from 'rxjs/operators';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   loginForm: FormGroup;
   loading = false;
@@ -26,9 +26,6 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    // Empty
-  }
 
   get f() {
     return this.loginForm.controls;
@@ -48,7 +45,6 @@ export class LoginComponent implements OnInit {
     if (!this.validateForm() && this.loginForm.invalid) {
       return;
     }
-    console.log(this.f['username'].value, this.f['password'].value);
     this.loading = true;
     this.authenticationService
       .login(this.f['username'].value, this.f['password'].value)

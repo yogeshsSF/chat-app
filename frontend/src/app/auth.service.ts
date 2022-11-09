@@ -48,6 +48,7 @@ export class AuthService {
       const input = document.createElement('input');
       input.type = 'hidden';
       input.name = key;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       input.value = (body as any)[key]; //NOSONAR
       myform.appendChild(input);
     });

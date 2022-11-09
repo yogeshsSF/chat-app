@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {NgxNotificationService} from 'ngx-notification';
 import {environment} from '../../environments/environment';
 import {Chat, ChatMessage} from '../chat.model';
@@ -17,15 +17,15 @@ import { AuthService } from '../auth.service';
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css'],
-  styles: [
-    `
-      /* :host {
-        display: flex;
-      } */
-    `,
-  ],
+  // styles: [
+  //   `
+  //     :host {
+  //       display: flex;
+  //     }
+  //   `,
+  // ],
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent {
   payload?: AuthPayload;
   username?: string;
   constructor(
@@ -33,17 +33,12 @@ export class ChatComponent implements OnInit {
     private readonly ngxNotificationService: NgxNotificationService,
     private route: ActivatedRoute,
     private authenticationService: AuthService,
-  ) {}
-
-  ngOnInit(): void {
+  ) {
     this.route.queryParams.subscribe(param => {
       this.authenticationService.getToken(param.code).subscribe(params =>{
-        // this.router.navigate(['chat'], {
-        //   queryParams: {code: res.accessToken},
-        // });
         this.token = params.accessToken;
         this.payload = jwt_decode(this.token);
-        console.log(this.payload,params.accessToken);
+        console.log(this.payload);
         this.username =
           this.payload?.user?.firstName ?? this.payload?.user?.username;
           this.channelUUID = environment.CHAT_ROOM;
@@ -63,8 +58,6 @@ export class ChatComponent implements OnInit {
     upgrade: false,
   };
   
-
-  socket = io(environment.SOCKET_ENDPOINT, this.socketIOOpts);
 
   enterToken() {
     this.userHttpService.getUserTenantId(this.token).subscribe(data => {
@@ -101,12 +94,13 @@ export class ChatComponent implements OnInit {
   }
 
   subcribeToNotifications() {
-    this.socket.on('connect', () => {
+    const socket = io(environment.SOCKET_ENDPOINT, this.socketIOOpts);
+    socket.on('connect', () => {
       const channelsToAdd: string[] = [this.channelUUID];
-      this.socket.emit('subscribe-to-channel', channelsToAdd);
+      socket.emit('subscribe-to-channel', channelsToAdd);
     });
 
-    this.socket.on('userNotif', message => {
+    socket.on('userNotif', message => {
       console.log(message); //NOSONAR
       const temp: ChatMessage = {
         body: message.body,
