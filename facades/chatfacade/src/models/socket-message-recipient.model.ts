@@ -1,8 +1,5 @@
-﻿// Copyright (c) 2022 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
-import {Entity, model, property} from '@loopback/repository';
+﻿
+import{Entity, model, property} from '@loopback/repository';
 
 @model({settings: {strict: false}})
 export class SocketMessageRecipient extends Entity {

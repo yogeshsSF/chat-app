@@ -1,7 +1,4 @@
-﻿// Copyright (c) 2022 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
+﻿
 import {inject, Provider} from '@loopback/core';
 import {Filter, Where} from '@loopback/repository';
 import {getService} from '@loopback/service-proxy';

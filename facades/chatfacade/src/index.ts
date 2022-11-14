@@ -1,7 +1,4 @@
-﻿// Copyright (c) 2022 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
+﻿
 import {ApplicationConfig, FacadeApplication} from './application';
 import * as dotenv from 'dotenv';
 export * from './application';
